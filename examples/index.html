@@ -357,9 +357,59 @@
       
     
     
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Standalone examples
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+    
     <a href="./" class="md-nav__link md-nav__link--active">
       Standalone examples
     </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mnist" class="md-nav__link">
+    Mnist
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fraud" class="md-nav__link">
+    Fraud
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cifar10" class="md-nav__link">
+    Cifar10
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xray" class="md-nav__link">
+    Xray
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
     
   </li>
 
@@ -400,6 +450,42 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#mnist" class="md-nav__link">
+    Mnist
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fraud" class="md-nav__link">
+    Fraud
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cifar10" class="md-nav__link">
+    Cifar10
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#xray" class="md-nav__link">
+    Xray
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -417,29 +503,35 @@
                 
                 <h1 id="examples-that-use-collective-learning">Examples that use Collective Learning<a class="headerlink" href="#examples-that-use-collective-learning" title="Permanent link">&para;</a></h1>
 <p>This is a list of examples that we've implemented to show you how to use Collective Learning</p>
-<ul>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/keras_mnist.py">mnist_keras</a>. 
-  Uses the MNIST dataset and <code>KerasLearner</code>. 
-  Discussed in more detail <a href="../intro_tutorial_keras/">here</a>.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_mnist.py">mnist_pytorch</a>. 
-  Uses the MNIST dataset and <code>PytorchLearner</code>. 
-  Discussed in more detail <a href="../intro_tutorial_pytorch/">here</a>.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/keras_fraud.py">fraud_keras</a>. 
-  Uses a dataset of bank transactions to predict fraud. 
-  Loads data from numpy arrays and uses <code>KerasLearner</code>.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/keras_cifar.py">cifar_keras</a>. 
-  Uses the cifar dataset and <code>KerasLearner</code>.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/keras_xray.py">xray_keras</a>. 
-  Loads xray image data and uses <code>KerasLearner</code>.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/mli_fraud.py">fraud_mli</a>.
-  Uses the <code>MachineLearningInterface</code> directly and detects fraud in bank transactions.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_cifar.py">cifar_pytorch</a>.
-  Uses <code>PytorchLearner</code> with CIFAR.</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_covid.py">covid_pytorch</a>.
-  Uses <code>PytorchLearner</code>, detects Covid19 from chest X-rays</li>
-<li><a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_xray.py">xray_pytorch</a>. 
-  Loads xray image data and uses <code>PytorchLearner</code>.</li>
-</ul>
+<h3 id="mnist">Mnist<a class="headerlink" href="#mnist" title="Permanent link">&para;</a></h3>
+<p>Uses the standard <a href="https://en.wikipedia.org/wiki/MNIST_database">Mnist</a> database of handwritten images
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/keras_mnist.py">mnist_keras</a>. 
+  Uses the <code>KerasLearner</code> helper class. 
+  Discussed in more detail <a href="../intro_tutorial_keras/">here</a>.
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_mnist.py">mnist_pytorch</a>. 
+  Uses the <code>PytorchLearner</code> helper class. 
+  Discussed in more detail <a href="../intro_tutorial_pytorch/">here</a>.</p>
+<h3 id="fraud">Fraud<a class="headerlink" href="#fraud" title="Permanent link">&para;</a></h3>
+<p>The fraud dataset consists of information about credit card transactions. 
+  The task is to predict whether transactions are fraudulent or not.
+  The data needs to be downloaded from <a href="https://www.kaggle.com/c/ieee-fraud-detection">Kaggle</a>
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/mli_fraud.py">fraud_mli</a>.
+  Uses the <code>MachineLearningInterface</code> directly and detects fraud in bank transactions.
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/keras_fraud.py">fraud_keras</a>. 
+  Loads data from numpy arrays and uses <code>KerasLearner</code>.</p>
+<h3 id="cifar10">Cifar10<a class="headerlink" href="#cifar10" title="Permanent link">&para;</a></h3>
+<p>Uses the standard <a href="https://en.wikipedia.org/wiki/CIFAR-10">Cifar10</a> database of images
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/keras_cifar.py">cifar_keras</a>. 
+  Uses the <code>KerasLearner</code> helper class.
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_cifar.py">cifar_pytorch</a>.
+  Uses the <code>PytorchLearner</code> helper class.</p>
+<h3 id="xray">Xray<a class="headerlink" href="#xray" title="Permanent link">&para;</a></h3>
+<p>A binary classification task that requires predicting pneumonia from images of chest X-rays. 
+  The data need to be downloaded from <a href="https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia">Kaggle</a>
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/keras_xray.py">xray_keras</a>. 
+  Uses the <code>KerasLearner</code> helper class.
+* <a href="https://github.com/fetchai/colearn/tree/master//examples/pytorch_xray.py">xray_pytorch</a>. 
+  Uses the <code>PytorchLearner</code> helper class.</p>
                 
               
               

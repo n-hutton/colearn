@@ -474,17 +474,16 @@
                 
                 
                 <h1 id="how-to-run-the-demo">How to run the demo<a class="headerlink" href="#how-to-run-the-demo" title="Permanent link">&para;</a></h1>
-<div class="admonition tip">
-<p class="admonition-title">Tip</p>
-<p>This section needs review after Jiri is finished</p>
-</div>
 <p>You can try collective learning for yourself using the simple demo in <code>./bin/run_demo.py</code>. 
-This demo creates n learners for one of three learning tasks, and co-ordinates the collective learning between them.</p>
-<p>There are three potential datasets for the demo</p>
+This demo creates n learners for one of five learning tasks and co-ordinates the collective learning between them.</p>
+<p>There are five potential datasets for the demo</p>
 <ul>
-<li>MNIST is the standard handwritten digits recognition dataset</li>
-<li>XRAY is a binary classification task that requires predicting pneumonia from images of chest X-rays. 
+<li>KERAS_MNIST is the Tensorflow implementation of standard handwritten digits recognition dataset</li>
+<li>KERAS_CIFAR10 is the Tensorflow implementation of standard image recognition dataset</li>
+<li>PYTORCH_XRAY is Pytorch implementation of a binary classification task that requires predicting pneumonia from images of chest X-rays. 
   The data need to be downloaded from <a href="https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia">kaggle</a></li>
+<li>PYTORCH_COVID_XRAY is Pytorch implementation of a 3 class classification task that requires predicting no finding, covid or pneumonia from images of chest X-rays. 
+  This dataset is currently unavailable.</li>
 <li>FRAUD The fraud dataset consists of information about credit card transactions, and the task is to predict whether 
   transactions are fraudulent or not. 
   The data need to be downloaded from <a href="https://www.kaggle.com/c/ieee-fraud-detection">kaggle</a></li>
@@ -492,22 +491,40 @@ This demo creates n learners for one of three learning tasks, and co-ordinates t
 <p>Use the -h flag to see the options:
 <div class="highlight"><pre><span></span><code>examples/run_demo.py -h
 </code></pre></div></p>
+<p>Arguments to run the demo:
+<div class="highlight"><pre><span></span><code>--data_dir:       Directory containing training data, not required for MNIST and CIFAR10
+--test_dir:       Optional directory containing test data. A fraction of the training set will be used as a test set when not specified
+--task:           Type of task for machine learning: KERAS_MNIST, KERAS_CIFAR10, FRAUD, PYTORCH_XRAY, PYTORCH_COVID_XRAY
+--model_type:     Type of machine learning model, default model will be used if not specified
+--n_learners:     Number of individual learners
+--n_epochs:       Number of training epochs
+--vote_threshold: Minimum fraction of positive votes to accept the new model
+--train_ratio:    Fraction of training dataset to be used as test-set when no test-set is specified
+--seed:           Seed for initialising model and shuffling datasets
+--learning_rate:  Learning rate for optimiser
+--batch_size:     Size of training batch
+</code></pre></div></p>
 <h2 id="running-mnist">Running MNIST<a class="headerlink" href="#running-mnist" title="Permanent link">&para;</a></h2>
 <p>The simplest task to run is MNIST because this doesn't require downloading the data. 
 This runs the MNIST task with five learners for 15 rounds.
-<div class="highlight"><pre><span></span><code>examples/run_demo.py -t MNIST -n <span class="m">5</span> -e <span class="m">15</span>
+<div class="highlight"><pre><span></span><code>examples/run_demo.py --task KERAS_MNIST --n_learners <span class="m">5</span> --n_epochs <span class="m">15</span>
 </code></pre></div>
-You should see a graph of the vote score and the test score (the score used here is area under the curve (AUC)).</p>
-<p>(insert graph image)</p>
-<p>As you can see, there are five learners, and intially they perform poorly.
+You should see a graph of the vote score and the test score (the score used here is categorical accuracy).
+New model is accepted (blue star) if amount of possitive votes (yellow color) is higher than 0.5. 
+New model is rejected (orange cross) if amount of negative votes (purple color) is lower than 0.5. </p>
+<p><img alt="Alt text" src="../images/mnist_plot.png?raw=true" title="Collective learning graph" /></p>
+<p>As you can see, there are five learners, and initially they perform poorly.
 In round one, learner 0 is selected to propose a new set of weights.</p>
 <h2 id="other-datasets">Other datasets<a class="headerlink" href="#other-datasets" title="Permanent link">&para;</a></h2>
-<p>The Fraud and X-ray datasets need to be downloaded from kaggle (this requires a kaggle account).
+<p>To run the CIFAR10 dataset:
+<div class="highlight"><pre><span></span><code>examples/run_demo.py --task KERAS_CIFAR10 --n_learners <span class="m">5</span> --n_epochs <span class="m">15</span>
+</code></pre></div>
+The Fraud and X-ray datasets need to be downloaded from kaggle (this requires a kaggle account).
 To run the fraud dataset:
-<div class="highlight"><pre><span></span><code>examples/run_demo.py -t FRAUD -n <span class="m">5</span> -e <span class="m">15</span> -d ./data/fraud
+<div class="highlight"><pre><span></span><code>examples/run_demo.py --task FRAUD --n_learners <span class="m">5</span> --n_epochs <span class="m">15</span> --data_dir ./data/fraud
 </code></pre></div>
 To run the X-ray dataset:
-<div class="highlight"><pre><span></span><code>examples/run_demo.py -t XRAY -n <span class="m">5</span> -e <span class="m">15</span> -d ./data/xray
+<div class="highlight"><pre><span></span><code>examples/run_demo.py --task PYTORCH_XRAY --n_learners <span class="m">5</span> -n_epochs <span class="m">15</span> -data_dir ./data/xray
 </code></pre></div></p>
                 
               

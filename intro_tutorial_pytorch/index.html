@@ -534,7 +534,7 @@ We'll end up with code like this:
 <span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span><span class="p">,</span> <span class="n">datasets</span>
 
 <span class="kn">from</span> <span class="nn">colearn.training</span> <span class="kn">import</span> <span class="n">initial_result</span><span class="p">,</span> <span class="n">collective_learning_round</span><span class="p">,</span> <span class="n">set_equal_weights</span>
-<span class="kn">from</span> <span class="nn">colearn.utils.plot</span> <span class="kn">import</span> <span class="n">plot_results</span><span class="p">,</span> <span class="n">plot_votes</span>
+<span class="kn">from</span> <span class="nn">colearn.utils.plot</span> <span class="kn">import</span> <span class="n">ColearnPlot</span>
 <span class="kn">from</span> <span class="nn">colearn.utils.results</span> <span class="kn">import</span> <span class="n">Results</span>
 <span class="kn">from</span> <span class="nn">colearn_pytorch.utils</span> <span class="kn">import</span> <span class="n">categorical_accuracy</span>
 <span class="kn">from</span> <span class="nn">colearn_pytorch.pytorch_learner</span> <span class="kn">import</span> <span class="n">PytorchLearner</span>
@@ -638,18 +638,23 @@ We'll end up with code like this:
 </span><span class="n">results</span> <span class="o">=</span> <span class="n">Results</span><span class="p">()</span>
 <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_result</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">))</span>
 
+<span class="n">plot</span> <span class="o">=</span> <span class="n">ColearnPlot</span><span class="p">(</span><span class="n">n_learners</span><span class="o">=</span><span class="n">n_learners</span><span class="p">,</span>
+                   <span class="n">score_name</span><span class="o">=</span><span class="n">score_name</span><span class="p">)</span>
+
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
     <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
         <span class="n">collective_learning_round</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">,</span>
                                   <span class="n">vote_threshold</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
     <span class="p">)</span>
 
-    <span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">n_learners</span><span class="p">,</span> <span class="n">score_name</span><span class="o">=</span><span class="n">score_name</span><span class="p">)</span>
-    <span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 
 <span class="c1"># Plot the final result with votes</span>
-<span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">n_learners</span><span class="p">,</span> <span class="n">score_name</span><span class="o">=</span><span class="n">score_name</span><span class="p">)</span>
-<span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Colearn Example Finished!&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <p>The first thing is to modify the data loading code.
 Each learner needs to have their own training and testing set from the data.

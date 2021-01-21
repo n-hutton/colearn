@@ -493,10 +493,23 @@ We'll end up with code like this:
 <span class="kn">import</span> <span class="nn">tensorflow_datasets</span> <span class="k">as</span> <span class="nn">tfds</span>
 
 <span class="kn">from</span> <span class="nn">colearn.training</span> <span class="kn">import</span> <span class="n">initial_result</span><span class="p">,</span> <span class="n">collective_learning_round</span><span class="p">,</span> <span class="n">set_equal_weights</span>
-<span class="kn">from</span> <span class="nn">colearn.utils.plot</span> <span class="kn">import</span> <span class="n">plot_results</span><span class="p">,</span> <span class="n">plot_votes</span>
+<span class="kn">from</span> <span class="nn">colearn.utils.plot</span> <span class="kn">import</span> <span class="n">ColearnPlot</span>
 <span class="kn">from</span> <span class="nn">colearn.utils.results</span> <span class="kn">import</span> <span class="n">Results</span>
 <span class="kn">from</span> <span class="nn">colearn_keras.keras_learner</span> <span class="kn">import</span> <span class="n">KerasLearner</span>
 
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">MNIST training example using Keras</span>
+
+<span class="sd">Used dataset:</span>
+<span class="sd">- MNIST is set of 60 000 black and white hand written digits images of size 28x28x1 in 10 classes</span>
+
+<span class="sd">What script does:</span>
+<span class="sd">- Loads MNIST dataset from Keras</span>
+<span class="sd">- Sets up a Keras learner</span>
+<span class="sd">- Randomly splits dataset between multiple learners</span>
+<span class="sd">- Does multiple rounds of learning process and displays plot with results</span>
+<span class="hll"><span class="sd">&quot;&quot;&quot;</span>
+</span>
 <span class="n">n_learners</span> <span class="o">=</span> <span class="mi">5</span>
 <span class="n">vote_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">vote_batches</span> <span class="o">=</span> <span class="mi">2</span>
@@ -508,8 +521,8 @@ We'll end up with code like this:
 <span class="n">l_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
 
-<span class="hll"><span class="c1"># Load data for each learner</span>
-</span><span class="n">train_dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;mnist&#39;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="c1"># Load data for each learner</span>
+<span class="n">train_dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;mnist&#39;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">&#39;train&#39;</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">train_datasets</span> <span class="o">=</span> <span class="p">[</span><span class="n">train_dataset</span><span class="o">.</span><span class="n">shard</span><span class="p">(</span><span class="n">num_shards</span><span class="o">=</span><span class="n">n_learners</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_learners</span><span class="p">)]</span>
 
 <span class="n">test_dataset</span> <span class="o">=</span> <span class="n">tfds</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;mnist&#39;</span><span class="p">,</span> <span class="n">split</span><span class="o">=</span><span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="n">as_supervised</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -520,8 +533,8 @@ We'll end up with code like this:
     <span class="sd">&quot;&quot;&quot;Normalizes images: `uint8` -&gt; `float32`.&quot;&quot;&quot;</span>
     <span class="k">return</span> <span class="n">tf</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">image</span><span class="p">,</span> <span class="n">tf</span><span class="o">.</span><span class="n">float32</span><span class="p">)</span> <span class="o">/</span> <span class="mf">255.</span><span class="p">,</span> <span class="n">label</span>
 
-
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_learners</span><span class="p">):</span>
+<span class="hll">
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_learners</span><span class="p">):</span>
     <span class="n">train_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">map</span><span class="p">(</span>
         <span class="n">normalize_img</span><span class="p">,</span> <span class="n">num_parallel_calls</span><span class="o">=</span><span class="n">tf</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">experimental</span><span class="o">.</span><span class="n">AUTOTUNE</span><span class="p">)</span>
     <span class="n">train_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">train_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]))</span>
@@ -533,8 +546,8 @@ We'll end up with code like this:
     <span class="n">test_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">test_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">batch</span><span class="p">(</span><span class="n">batch_size</span><span class="p">)</span>
 
 
-<span class="hll"><span class="c1"># Define model</span>
-</span><span class="k">def</span> <span class="nf">get_model</span><span class="p">():</span>
+<span class="c1"># Define model</span>
+<span class="k">def</span> <span class="nf">get_model</span><span class="p">():</span>
     <span class="n">input_img</span> <span class="o">=</span> <span class="n">tf</span><span class="o">.</span><span class="n">keras</span><span class="o">.</span><span class="n">Input</span><span class="p">(</span>
         <span class="n">shape</span><span class="o">=</span><span class="p">(</span><span class="n">width</span><span class="p">,</span> <span class="n">height</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;Input&quot;</span>
     <span class="p">)</span>
@@ -562,8 +575,8 @@ We'll end up with code like this:
     <span class="k">return</span> <span class="n">model</span>
 
 
-<span class="n">all_learner_models</span> <span class="o">=</span> <span class="p">[]</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_learners</span><span class="p">):</span>
+<span class="hll"><span class="n">all_learner_models</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_learners</span><span class="p">):</span>
     <span class="n">all_learner_models</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">KerasLearner</span><span class="p">(</span>
         <span class="n">model</span><span class="o">=</span><span class="n">get_model</span><span class="p">(),</span>
         <span class="n">train_loader</span><span class="o">=</span><span class="n">train_datasets</span><span class="p">[</span><span class="n">i</span><span class="p">],</span>
@@ -575,9 +588,12 @@ We'll end up with code like this:
 
 <span class="n">set_equal_weights</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">)</span>
 
-<span class="hll"><span class="c1"># Train the model using Collective Learning</span>
-</span><span class="n">results</span> <span class="o">=</span> <span class="n">Results</span><span class="p">()</span>
+<span class="c1"># Train the model using Collective Learning</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">Results</span><span class="p">()</span>
 <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_result</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">))</span>
+
+<span class="n">plot</span> <span class="o">=</span> <span class="n">ColearnPlot</span><span class="p">(</span><span class="n">n_learners</span><span class="o">=</span><span class="n">n_learners</span><span class="p">,</span>
+                   <span class="n">score_name</span><span class="o">=</span><span class="n">all_learner_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">criterion</span><span class="p">)</span>
 
 <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
     <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
@@ -585,13 +601,13 @@ We'll end up with code like this:
                                   <span class="n">vote_threshold</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
     <span class="p">)</span>
 
-    <span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">n_learners</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                 <span class="n">score_name</span><span class="o">=</span><span class="n">all_learner_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">criterion</span><span class="p">)</span>
-    <span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+    <span class="n">plot</span><span class="o">.</span><span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
 
-<span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">n_learners</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-             <span class="n">score_name</span><span class="o">=</span><span class="n">all_learner_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">criterion</span><span class="p">)</span>
-<span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="n">plot</span><span class="o">.</span><span class="n">plot_votes</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Colearn Example Finished!&quot;</span><span class="p">)</span>
 </code></pre></div></p>
 <p>The first thing is to modify the data loading code.
 Each learner needs to have their own training and testing set from the data.
