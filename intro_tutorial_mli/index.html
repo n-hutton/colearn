@@ -255,6 +255,19 @@
 
 
   <li class="md-nav__item">
+    <a href="../installation/" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
     <a href="../intro_tutorial_keras/" class="md-nav__link">
       Keras
     </a>
@@ -700,10 +713,10 @@ Then a new round begins.
 <span class="n">results</span> <span class="o">=</span> <span class="n">Results</span><span class="p">()</span>
 <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_result</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
     <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
         <span class="n">collective_learning_round</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">,</span>
-                                  <span class="n">vote_threshold</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+                                  <span class="n">vote_threshold</span><span class="p">,</span> <span class="nb">round</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">n_learners</span><span class="p">,</span> <span class="n">block</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>

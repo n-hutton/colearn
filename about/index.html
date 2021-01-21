@@ -305,6 +305,19 @@
 
 
   <li class="md-nav__item">
+    <a href="../installation/" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
     <a href="../intro_tutorial_keras/" class="md-nav__link">
       Keras
     </a>
@@ -495,9 +508,9 @@ If enough learners <em>approve</em> the update then global model is updated. Aft
 sending the update out for voting, calculating the vote and accepting or declining the update. 
 Here we have a very minimal driver that doesn't use networking or a blockchain. Eventually the driver will be a smart contract. 
 This is the code that implements one round of voting:</p>
-<p><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">run_one_epoch</span><span class="p">(</span><span class="n">epoch_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">learners</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MachineLearningInterface</span><span class="p">],</span>
+<p><div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">run_one_round</span><span class="p">(</span><span class="n">round_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">learners</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="n">MachineLearningInterface</span><span class="p">],</span>
                   <span class="n">vote_threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-    <span class="n">proposer</span> <span class="o">=</span> <span class="n">epoch_index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">learners</span><span class="p">)</span>
+    <span class="n">proposer</span> <span class="o">=</span> <span class="n">round_index</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">learners</span><span class="p">)</span>
     <span class="n">new_weights</span> <span class="o">=</span> <span class="n">learners</span><span class="p">[</span><span class="n">proposer</span><span class="p">]</span><span class="o">.</span><span class="n">mli_propose_weights</span><span class="p">()</span>
 
     <span class="n">prop_weights_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">ln</span><span class="o">.</span><span class="n">mli_test_weights</span><span class="p">(</span><span class="n">new_weights</span><span class="p">)</span> <span class="k">for</span> <span class="n">ln</span> <span class="ow">in</span> <span class="n">learners</span><span class="p">]</span>
@@ -610,13 +623,13 @@ see the tutorial <a href="../intro_tutorial_mli/">here</a></p>
           </a>
         
         
-          <a href="../intro_tutorial_keras/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+          <a href="../installation/" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
             <div class="md-footer-nav__title">
               <div class="md-ellipsis">
                 <span class="md-footer-nav__direction">
                   Next
                 </span>
-                Keras
+                Installation
               </div>
             </div>
             <div class="md-footer-nav__button md-icon">

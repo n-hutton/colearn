@@ -255,6 +255,19 @@
 
 
   <li class="md-nav__item">
+    <a href="../installation/" class="md-nav__link">
+      Installation
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+
+  <li class="md-nav__item">
     <a href="../intro_tutorial_keras/" class="md-nav__link">
       Keras
     </a>
@@ -424,7 +437,7 @@ we are going to load the data and configure the model, and then we will run Coll
 <span class="c1"># define some constants</span>
 <span class="n">batch_size</span> <span class="o">=</span> <span class="mi">64</span>
 <span class="n">seed</span> <span class="o">=</span> <span class="mi">42</span>
-<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">n_rounds</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">train_fraction</span> <span class="o">=</span> <span class="mf">0.9</span>
 <span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.001</span>
 <span class="n">height</span> <span class="o">=</span> <span class="mi">28</span>
@@ -472,7 +485,7 @@ we are going to load the data and configure the model, and then we will run Coll
 <span class="n">criterion</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">NLLLoss</span><span class="p">()</span>
 
 <span class="hll"><span class="c1"># Train and evaluate the model</span>
-</span><span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+</span><span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
     <span class="c1"># train model</span>
     <span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
@@ -503,7 +516,7 @@ we are going to load the data and configure the model, and then we will run Coll
             <span class="n">output</span> <span class="o">=</span> <span class="n">model</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
             <span class="n">total_score</span> <span class="o">+=</span> <span class="n">criterion</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
     <span class="n">avg_loss</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">total_score</span> <span class="o">/</span> <span class="p">(</span><span class="n">num_test_batches</span> <span class="o">*</span> <span class="n">batch_size</span><span class="p">))</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average loss at epoch </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Average loss at round </span><span class="si">{</span><span class="nb">round</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">avg_loss</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </code></pre></div>
 There are three steps:</p>
 <ol>
@@ -668,6 +681,10 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
 
 
 <span class="k">class</span> <span class="nc">PytorchLearner</span><span class="p">(</span><span class="n">MachineLearningInterface</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Pytorch learner implementation of machine learning interface</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">,</span>
                  <span class="n">optimizer</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span><span class="p">,</span>
                  <span class="n">train_loader</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">,</span>
@@ -677,8 +694,20 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
                  <span class="n">minimise_criterion</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
                  <span class="n">vote_criterion</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Callable</span><span class="p">[[</span><span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">,</span> <span class="n">torch</span><span class="o">.</span><span class="n">Tensor</span><span class="p">],</span> <span class="nb">float</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
                  <span class="n">num_train_batches</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">num_test_batches</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-                 <span class="n">score_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;score&quot;</span><span class="p">):</span>
+                 <span class="n">num_test_batches</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :param model: Pytorch model used for training</span>
+<span class="sd">        :param optimizer: Training optimizer</span>
+<span class="sd">        :param train_loader: Train dataset</span>
+<span class="sd">        :param test_loader: Optional test dataset - subset of training set will be used if not specified</span>
+<span class="sd">        :param device: Pytorch device - CPU or GPU</span>
+<span class="sd">        :param criterion: Loss function</span>
+<span class="sd">        :param minimise_criterion: True to minimise value of criterion, False to maximise</span>
+<span class="sd">        :param vote_criterion: Function to measure model performance for voting</span>
+<span class="sd">        :param num_train_batches: Number of training batches</span>
+<span class="sd">        :param num_test_batches: Number of testing batches</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="c1"># Model has to be on same device as data</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">to</span><span class="p">(</span><span class="n">device</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Optimizer</span> <span class="o">=</span> <span class="n">optimizer</span>
@@ -692,19 +721,31 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
         <span class="bp">self</span><span class="o">.</span><span class="n">vote_criterion</span> <span class="o">=</span> <span class="n">vote_criterion</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">vote_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_loader</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">score_name</span> <span class="o">=</span> <span class="n">score_name</span>
 
     <span class="k">def</span> <span class="nf">mli_get_current_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Weights</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        :return: The current weights of the model</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">w</span> <span class="o">=</span> <span class="n">Weights</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="o">.</span><span class="n">clone</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()])</span>
         <span class="k">return</span> <span class="n">w</span>
 
     <span class="k">def</span> <span class="nf">set_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Weights</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Rewrites weight of current model</span>
+<span class="sd">        :param weights: Weights to be stored</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">with</span> <span class="n">torch</span><span class="o">.</span><span class="n">no_grad</span><span class="p">():</span>
             <span class="k">for</span> <span class="n">new_param</span><span class="p">,</span> <span class="n">old_param</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">weights</span><span class="o">.</span><span class="n">weights</span><span class="p">,</span>
                                             <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">parameters</span><span class="p">()):</span>
                 <span class="n">old_param</span><span class="o">.</span><span class="n">set_</span><span class="p">(</span><span class="n">new_param</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trains the model on the training dataset</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">model</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
 
         <span class="k">for</span> <span class="n">batch_idx</span><span class="p">,</span> <span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_loader</span><span class="p">):</span>
@@ -723,6 +764,12 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
             <span class="bp">self</span><span class="o">.</span><span class="n">optimizer</span><span class="o">.</span><span class="n">step</span><span class="p">()</span>
 
     <span class="k">def</span> <span class="nf">mli_propose_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Weights</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Trains model on training set and returns new weights after training</span>
+<span class="sd">        - Current model is reverted to original state after training</span>
+<span class="sd">        :return: Weights after training</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">current_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mli_get_current_weights</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">train</span><span class="p">()</span>
         <span class="n">new_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mli_get_current_weights</span><span class="p">()</span>
@@ -730,6 +777,12 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
         <span class="k">return</span> <span class="n">new_weights</span>
 
     <span class="k">def</span> <span class="nf">mli_test_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Weights</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ProposedWeights</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests given weights on training and test set and returns weights with score values</span>
+<span class="sd">        :param weights: Weights to be tested</span>
+<span class="sd">        :return: ProposedWeights - Weights with vote and test score</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">current_weights</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mli_get_current_weights</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
 
@@ -749,12 +802,24 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
                                <span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">vote</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">new_score</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compares current model score with proposed model score and returns vote</span>
+<span class="sd">        :param new_score: Proposed score</span>
+<span class="sd">        :return: bool positive or negative vote</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">minimise_criterion</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">new_score</span> <span class="o">&lt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vote_score</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">new_score</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">vote_score</span>
 
     <span class="k">def</span> <span class="nf">test</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">loader</span><span class="p">:</span> <span class="n">torch</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">DataLoader</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">float</span><span class="p">:</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Tests performance of the model on specified dataset</span>
+<span class="sd">        :param loader: Dataset for testing</span>
+<span class="sd">        :return: Value of performance metric</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">criterion</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s2">&quot;Criterion is unspecified so test method cannot be used&quot;</span><span class="p">)</span>
 
@@ -783,6 +848,11 @@ To make it easier to use the <code>MachineLearningInterface</code> with pytorch,
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">vote_criterion</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">all_outputs</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="n">torch</span><span class="o">.</span><span class="n">cat</span><span class="p">(</span><span class="n">all_labels</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">mli_accept_weights</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">weights</span><span class="p">:</span> <span class="n">Weights</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Updates the model with the proposed set of weights</span>
+<span class="sd">        :param weights: The new weights</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="bp">self</span><span class="o">.</span><span class="n">set_weights</span><span class="p">(</span><span class="n">weights</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">vote_score</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">train_loader</span><span class="p">)</span>
 </code></pre></div>
@@ -817,10 +887,10 @@ Then a new round begins.
 <span class="n">results</span> <span class="o">=</span> <span class="n">Results</span><span class="p">()</span>
 <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">initial_result</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">))</span>
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
     <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
         <span class="n">collective_learning_round</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">,</span>
-                                  <span class="n">vote_threshold</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+                                  <span class="n">vote_threshold</span><span class="p">,</span> <span class="nb">round</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="n">plot_results</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="n">n_learners</span><span class="p">,</span> <span class="n">score_name</span><span class="o">=</span><span class="n">score_name</span><span class="p">)</span>
