@@ -519,7 +519,7 @@ We'll end up with code like this:
 <span class="n">vote_threshold</span> <span class="o">=</span> <span class="mf">0.5</span>
 <span class="n">vote_batches</span> <span class="o">=</span> <span class="mi">2</span>
 
-<span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">20</span>
+<span class="n">n_rounds</span> <span class="o">=</span> <span class="mi">20</span>
 <span class="n">width</span> <span class="o">=</span> <span class="mi">28</span>
 <span class="n">height</span> <span class="o">=</span> <span class="mi">28</span>
 <span class="n">n_classes</span> <span class="o">=</span> <span class="mi">10</span>
@@ -600,10 +600,10 @@ We'll end up with code like this:
 <span class="n">plot</span> <span class="o">=</span> <span class="n">ColearnPlot</span><span class="p">(</span><span class="n">n_learners</span><span class="o">=</span><span class="n">n_learners</span><span class="p">,</span>
                    <span class="n">score_name</span><span class="o">=</span><span class="n">all_learner_models</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">criterion</span><span class="p">)</span>
 
-<span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+<span class="k">for</span> <span class="n">round_index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_rounds</span><span class="p">):</span>
     <span class="n">results</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
         <span class="n">collective_learning_round</span><span class="p">(</span><span class="n">all_learner_models</span><span class="p">,</span>
-                                  <span class="n">vote_threshold</span><span class="p">,</span> <span class="n">epoch</span><span class="p">)</span>
+                                  <span class="n">vote_threshold</span><span class="p">,</span> <span class="n">round_index</span><span class="p">)</span>
     <span class="p">)</span>
 
     <span class="n">print_results</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
