@@ -484,7 +484,7 @@ This demo creates n learners for one of five learning tasks and co-ordinates the
 <li>PYTORCH_XRAY is Pytorch implementation of a binary classification task that requires predicting pneumonia from images of chest X-rays. 
   The data need to be downloaded from <a href="https://www.kaggle.com/paultimothymooney/chest-xray-pneumonia">kaggle</a></li>
 <li>PYTORCH_COVID_XRAY is Pytorch implementation of a 3 class classification task that requires predicting no finding, covid or pneumonia from images of chest X-rays. 
-  This dataset is currently unavailable.</li>
+  This dataset is not currently publicly available.</li>
 <li>FRAUD The fraud dataset consists of information about credit card transactions, and the task is to predict whether 
   transactions are fraudulent or not. 
   The data need to be downloaded from <a href="https://www.kaggle.com/c/ieee-fraud-detection">kaggle</a></li>
@@ -506,13 +506,13 @@ This demo creates n learners for one of five learning tasks and co-ordinates the
 --batch_size:     Size of training batch
 </code></pre></div></p>
 <h2 id="running-mnist">Running MNIST<a class="headerlink" href="#running-mnist" title="Permanent link">&para;</a></h2>
-<p>The simplest task to run is MNIST because this doesn't require downloading the data. 
-This runs the MNIST task with five learners for 15 rounds.
+<p>The simplest task to run is MNIST because the data are downloaded automatically from <code>tensorflow_datasets</code>.
+The command below runs the MNIST task with five learners for 15 rounds.
 <div class="highlight"><pre><span></span><code>examples/run_demo.py --task KERAS_MNIST --n_learners <span class="m">5</span> --n_rounds <span class="m">15</span>
 </code></pre></div>
 You should see a graph of the vote score and the test score (the score used here is categorical accuracy).
-New model is accepted (blue star) if amount of possitive votes (yellow color) is higher than 0.5. 
-New model is rejected (orange cross) if amount of negative votes (purple color) is lower than 0.5. </p>
+The new model is accepted if the fraction of positive votes (green colour) is higher than 0.5. 
+The new model is rejected if the fraction of negative votes (red color) is lower than 0.5. </p>
 <p><img alt="Alt text" src="../images/mnist_plot.png?raw=true" title="Collective learning graph" /></p>
 <p>As you can see, there are five learners, and initially they perform poorly.
 In round one, learner 0 is selected to propose a new set of weights.</p>
