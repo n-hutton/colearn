@@ -515,6 +515,27 @@ pip install colearn[pytorch]
 <p>To install both the Keras and Pytorch extras use:
 <div class="highlight"><pre><span></span><code>pip install colearn[all]
 </code></pre></div></p>
+<p>To run stand-alone examples:
+   <div class="highlight"><pre><span></span><code><span class="c1"># Download the examples</span>
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_cifar.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_fraud.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_mnist.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_mnist_diffpriv.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_xray.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/mli_fraud.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/mli_random_forest_iris.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_cifar.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_covid.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_mnist.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_mnist_diffpriv.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_xray.py
+<span class="c1"># Or they can be accessed from colearn/examples by cloning colearn repo</span>
+
+<span class="c1"># for colearn[keras] or colearn[all]</span>
+python3 keras_mnist.py
+<span class="c1"># for colearn[pytorch] or colearn[all]</span>
+python3 pytorch_mnist.py
+</code></pre></div></p>
 <h2 id="installing-from-source">Installing From Source<a class="headerlink" href="#installing-from-source" title="Permanent link">&para;</a></h2>
 <p>Alternatively, to install the latest code from the repo:</p>
 <ol>

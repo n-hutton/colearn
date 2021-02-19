@@ -544,12 +544,27 @@ To install with just support for Keras or Pytorch:</p>
 pip install colearn<span class="o">[</span>pytorch<span class="o">]</span>
 </code></pre></div>
 <p>For more installation options or get the latest (development) version see <a href="installation/">Installation</a></p>
-<p>Then run one of the examples:</p>
-<div class="codehilite"><pre><span></span><code>```bash
-python examples/pytorch_mnist.py
-```
-</code></pre></div>
+<p>Then run one of the examples:
+   <div class="highlight"><pre><span></span><code><span class="c1"># Download the examples</span>
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_cifar.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_fraud.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_mnist.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_mnist_diffpriv.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/keras_xray.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/mli_fraud.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/mli_random_forest_iris.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_cifar.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_covid.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_mnist.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_mnist_diffpriv.py
+wget https://raw.githubusercontent.com/fetchai/colearn/master/examples/pytorch_xray.py
+<span class="c1"># Or they can be accessed from colearn/examples by cloning colearn repo</span>
 
+<span class="c1"># for colearn[keras] or colearn[all]</span>
+python3 keras_mnist.py
+<span class="c1"># for colearn[pytorch] or colearn[all]</span>
+python3 pytorch_mnist.py
+</code></pre></div></p>
 <p>For other examples see the <a href="examples/">Examples</a>.</p>
 <h2 id="writing-your-own-models">Writing your own models<a class="headerlink" href="#writing-your-own-models" title="Permanent link">&para;</a></h2>
 <p>We encourage users to try out the system by writing their own models. 
