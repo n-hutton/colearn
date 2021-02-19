@@ -266,9 +266,58 @@
         
       
       
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Installation
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
       <a href="./" class="md-nav__link md-nav__link--active">
         Installation
       </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-from-source" class="md-nav__link">
+    Installing From Source
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing From Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-the-tests" class="md-nav__link">
+    Running the tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -401,6 +450,41 @@
     
   
   
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#installing-from-source" class="md-nav__link">
+    Installing From Source
+  </a>
+  
+    <nav class="md-nav" aria-label="Installing From Source">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#running-the-tests" class="md-nav__link">
+    Running the tests
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#documentation" class="md-nav__link">
+    Documentation
+  </a>
+  
+</li>
+      
+    </ul>
+  
 </nav>
                   </div>
                 </div>
@@ -420,20 +504,52 @@
 <p>The core package, <code>colearn</code>, contains only the <a href="../about/">MachineLearningInterface</a> and a simple driver that 
 implements the Collective Learning Protocol. 
 To install only the core package:
-<div class="highlight"><pre><span></span><code>pip install .
+<div class="highlight"><pre><span></span><code>pip install colearn
 </code></pre></div></p>
 <p>To make collective learning easier to use we have defined extra packages with helpers
 for model development in Keras and Pytorch.</p>
 <p>To install with Keras/Pytorch extras:
-<div class="highlight"><pre><span></span><code>pip install .[keras]
-pip install .[pytorch]
+<div class="highlight"><pre><span></span><code>pip install colearn[keras]
+pip install colearn[pytorch]
 </code></pre></div></p>
-<p>To install both the keras and pytorch extras use:
-<div class="highlight"><pre><span></span><code>pip install .[all]
+<p>To install both the Keras and Pytorch extras use:
+<div class="highlight"><pre><span></span><code>pip install colearn[all]
 </code></pre></div></p>
+<h2 id="installing-from-source">Installing From Source<a class="headerlink" href="#installing-from-source" title="Permanent link">&para;</a></h2>
+<p>Alternatively, to install the latest code from the repo:</p>
+<ol>
+<li>Download the source code from github:
+   <div class="highlight"><pre><span></span><code>git clone https://github.com/fetchai/colearn.git <span class="o">&amp;&amp;</span> <span class="nb">cd</span> colearn
+</code></pre></div></li>
+<li>
+<p>Create and launch a clean virtual environment with Python 3.7. 
+   (This library has currently only been tested with Python 3.7).
+   <div class="highlight"><pre><span></span><code>pipenv --python <span class="m">3</span>.7 <span class="o">&amp;&amp;</span> pipenv shell
+</code></pre></div></p>
+</li>
+<li>
+<p>Install the package from source:
+    <div class="highlight"><pre><span></span><code>pip install -e .<span class="o">[</span>all<span class="o">]</span>
+</code></pre></div></p>
+</li>
+<li>Run one of the examples:
+    <div class="highlight"><pre><span></span><code>examples/pytorch_mnist.py
+</code></pre></div></li>
+</ol>
 <p>If you are developing the colearn library then install it in editable mode so that new
 changes are effective immediately:
 <div class="highlight"><pre><span></span><code>pip install -e .[all]
+</code></pre></div></p>
+<h3 id="running-the-tests">Running the tests<a class="headerlink" href="#running-the-tests" title="Permanent link">&para;</a></h3>
+<p>Tests can be run with:
+<div class="highlight"><pre><span></span><code>tox
+</code></pre></div></p>
+<h2 id="documentation">Documentation<a class="headerlink" href="#documentation" title="Permanent link">&para;</a></h2>
+<p>To run the documentation, first install <a href="https://www.mkdocs.org">mkdocs</a> and plugins:
+<div class="highlight"><pre><span></span><code>pip install .<span class="o">[</span>docs<span class="o">]</span> 
+</code></pre></div></p>
+<p>Then run: 
+<div class="highlight"><pre><span></span><code>mkdocs serve
 </code></pre></div></p>
                 
               

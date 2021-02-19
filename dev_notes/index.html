@@ -403,6 +403,13 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#build-image" class="md-nav__link">
+    Build image
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -426,6 +433,13 @@
 <p>To have access to the google cloud storage you need to setup your google authentication and
 have the $GOOGLE_APPLICATION_CREDENTIALS set up correctly. 
 For more details ask or see the contract-learn documentation</p>
+<h2 id="build-image">Build image<a class="headerlink" href="#build-image" title="Permanent link">&para;</a></h2>
+<p>To build ML server image and push to google cloud use the following command:
+<div class="highlight"><pre><span></span><code>cd docker
+python3 ./build.py --publish --allow_dirty
+# Check this worked correctly
+docker images
+</code></pre></div></p>
                 
               
               
